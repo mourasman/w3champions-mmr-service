@@ -9,7 +9,7 @@ steps:
   displayName: Build an image
   inputs:
     containerRegistry: "official-docker-modmoto"
-    repository: "modmoto/w3champions-matchmaking-service"
+    repository: "modmoto/w3champions-mmr-service"
     command: "buildAndPush"
     buildContext: "."
     dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
