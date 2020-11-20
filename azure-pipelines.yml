@@ -1,0 +1,18 @@
+trigger:
+- master
+
+pool:
+  vmImage: "ubuntu-18.04"
+
+steps:
+- task: Docker@2
+  displayName: Build an image
+  inputs:
+    containerRegistry: "official-docker-modmoto"
+    repository: "modmoto/w3champions-matchmaking-service"
+    command: "buildAndPush"
+    buildContext: "."
+    dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
+    tags: |
+      $(Build.BuildId)
+      latest
