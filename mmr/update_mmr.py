@@ -1,7 +1,7 @@
-from scipy import optimize
-import numpy as np
 import glicko2
+import numpy as np
 from pydantic import BaseModel
+from scipy import optimize
 
 
 # ratings_G_o = all Ratings of players in Game Originally
@@ -13,6 +13,11 @@ class UpdateMmrRequestBody(BaseModel):
     ratings_list: list
     rds_list: list
     t1_won: bool
+
+
+class UpdateMmrResponseBody(BaseModel):
+    ratings_list: list
+    rds_list: list
 
 
 def update_after_game(ratings_list, rds_list, T1_won):
@@ -58,7 +63,7 @@ def update_after_game(ratings_list, rds_list, T1_won):
     xi_2 = T2.getRd() / rd_T2
     rds_G_u = update_RD(rds_G, m, xi_1, xi_2)
     ratings_G_u = update_ratings(ratings_G, rds_G, delta_u)
-    return [ratings_G_u.tolist(), rds_G_u.tolist()]
+    return UpdateMmrResponseBody(ratings_list=ratings_G_u.tolist(), rds_list=rds_G_u.tolist())
 
 
 # function to update ratings for both teams
