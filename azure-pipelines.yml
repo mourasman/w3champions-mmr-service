@@ -10,8 +10,13 @@ steps:
   inputs:
     scriptSource: 'inline'
     script: |
-      pip install pytest
       pytest
+# - task: CmdLine@2
+#   displayName: test
+#   inputs:
+#     script: |
+#       pip install pytest
+#       pytest
 
 - task: Docker@2
   displayName: Build an image
