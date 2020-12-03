@@ -10,7 +10,7 @@ steps:
 
 - script: |
     pip install pytest
-    pytest
+    python -m pytest
   displayName: 'Test with pytest'
 
 - task: Docker@2
