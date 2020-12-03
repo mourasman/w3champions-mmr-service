@@ -11,11 +11,8 @@ steps:
   displayName: 'Install tools'
 
 - script: |
-    python -m pipenv install
-  displayName: 'Install modules'
-
-- script: |
     pip install pytest
+    python -m pipenv install
     python -m pytest
   displayName: 'Test with pytest'
 # pip install pytest-cov
