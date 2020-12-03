@@ -10,6 +10,3 @@ glicko2 = "*"
 scipy = "*"
 uvicorn = "*"
 fastapi = "*"
-
-[requires]
-python_version = "3.7"
