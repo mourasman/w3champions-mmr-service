@@ -5,14 +5,13 @@ pool:
   vmImage: "ubuntu-18.04"
 
 steps:
-- task: CmdLine@2
-  displayName: test
-  inputs:
-    script: |
-      pip install pipenv
-      pipenv install
-      pip install pytest
-      pytest
+- script: python -m pip install --upgrade pip setuptools wheel
+  displayName: 'Install tools'
+
+- script: |
+    pip install pytest
+    pytest
+  displayName: 'Test with pytest'
 
 - task: Docker@2
   displayName: Build an image
