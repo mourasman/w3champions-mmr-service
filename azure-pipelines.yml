@@ -9,6 +9,8 @@ steps:
   displayName: test
   inputs:
     script: |
+      pip install pipenv
+      pipenv install
       pip install pytest
       pytest
 
