@@ -7,16 +7,11 @@ pool:
 steps:
 - script: |
     python -m pip install --upgrade pip setuptools wheel
-    pip install pipenv
-  displayName: 'Install tools'
+    pip install pipenv pytest
+    pipenv install
+    pytest
+  displayName: 'Run fastapi tests'
 
-- script: |
-    pip install pytest
-    python -m pipenv install
-    python -m pytest
-  displayName: 'Test with pytest'
-# pip install pytest-cov
-#  --junitxml=junit/test-results.xml --cov=. --cov-report=xml --cov-report=html
 - task: Docker@2
   displayName: Build an image
   inputs:
