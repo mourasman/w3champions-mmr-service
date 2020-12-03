@@ -5,15 +5,13 @@ from main import app
 client = TestClient(app)
 
 
-def test_basic_mmr1():
+def run_test(mmr0, rd0, t1win, mmr1, rd1):
     response = client.post(
         "/mmr/update",
         json={
-          "ratings_list":
-            [ 1400, 1600, 1340, 1700 ],
-          "rds_list":
-            [ 350, 350, 350, 350 ],
-          "t1_won": True},
+          "ratings_list": mmr0,
+          "rds_list": rd0,
+          "t1_won": t1win},
     )
     assert response.status_code == 200
 
@@ -25,27 +23,33 @@ def test_basic_mmr1():
     rl = [round(num) for num in ratings_list]
     rd = [round(num) for num in rds_list]
 
-    assert rl == [1530, 1714, 1203, 1592]
-    assert rd == [278, 278, 278, 278]
+    assert rl == mmr1
+    assert rd == rd1
 
 
-def test_basic_mmr2():
-    response = client.post(
-        "/mmr/update",
-        json={
-            "ratings_list": [2000, 1500],
-            "rds_list": [30, 350],
-            "t1_won": True},
+def test_2x2():
+    run_test(
+      [ 1400, 1600, 1340, 1700 ],
+      [ 350, 350, 350, 350 ],
+      True,
+      [1530, 1714, 1203, 1592],
+      [278, 278, 278, 278]
     )
-    assert response.status_code == 200
 
-    result = response.json()
 
-    ratings_list = result["ratings_list"]
-    rds_list = result["rds_list"]
+def test_1x1():
+    run_test(
+      [ 2000, 1500 ],
+      [ 90, 350 ],
+      True,
+      [2002, 1465],
+      [90, 318]
+    )
+    run_test(
+      [ 2000, 1500 ],
+      [ 90, 350 ],
+      False,
+      [1966, 2021],
+      [90, 318]
+    )
 
-    rl = [round(num) for num in ratings_list]
-    rd = [round(num) for num in rds_list]
-
-    assert rl == [2001, 1467]
-    assert rd == [61, 319]
