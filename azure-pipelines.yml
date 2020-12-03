@@ -5,14 +5,21 @@ pool:
   vmImage: "ubuntu-18.04"
 
 steps:
-- script: python -m pip install --upgrade pip setuptools wheel
+- script: |
+    python -m pip install --upgrade pip setuptools wheel
+    pip install pipenv
   displayName: 'Install tools'
+
+- script: |
+    python -m pipenv install
+  displayName: 'Install modules'
 
 - script: |
     pip install pytest
     python -m pytest
   displayName: 'Test with pytest'
-
+# pip install pytest-cov
+#  --junitxml=junit/test-results.xml --cov=. --cov-report=xml --cov-report=html
 - task: Docker@2
   displayName: Build an image
   inputs:
