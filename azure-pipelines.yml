@@ -5,6 +5,14 @@ pool:
   vmImage: "ubuntu-18.04"
 
 steps:
+- task: PythonScript@0
+  displayName: test
+  inputs:
+    scriptSource: 'inline'
+    script: |
+      pip install pytest
+      pytest
+
 - task: Docker@2
   displayName: Build an image
   inputs:
