@@ -7,9 +7,9 @@ pool:
 steps:
 - script: |
     python -m pip install --upgrade pip setuptools wheel
-    pip install pipenv pytest
-    pipenv install
-    pytest
+    python -m pip install pipenv pytest
+    python -m pipenv install
+    python -m pytest
   displayName: 'Run fastapi tests'
 
 - task: Docker@2
