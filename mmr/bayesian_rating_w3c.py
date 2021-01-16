@@ -7,6 +7,7 @@ class UpdateMmrRequestBody(BaseModel):
     ratings_list: list
     rds_list: list
     T_won: int
+    T: int
 
 
 class UpdateMmrResponseBody(BaseModel):
