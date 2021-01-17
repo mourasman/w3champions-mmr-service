@@ -46,6 +46,8 @@ def game_odds(ratings_G, rds_G, T, P):
     return odds
 
 
+#gamemode should be of the form "PvPvP"
+#number of teams is occurences of "v"+1
 
 def find_best_game(ratings, rds, gamemode):
     #that part should be refactored by someone who understands
@@ -53,15 +55,8 @@ def find_best_game(ratings, rds, gamemode):
     #the point is that generaate_super_recursive should only be called once per gamemode
     #whenever we restart the service
     #and its output be available in memory at any time later
-    if gamemode == 'Footies':
-        T = 4
-        P = 3
-    if gamemode == '4on4':
-        T = 2
-        P = 4
-#     if gamemode == '6on6':
-#         T = 2
-#         P = 6
+    T = gamemode.count('v')+1
+    P = int(gamemode[0])
     if 'superset' not in globals():
         global superset
         superset = {}
@@ -72,11 +67,7 @@ def find_best_game(ratings, rds, gamemode):
     gamemode_set = superset[gamemode]
     most_fair = 1
     for Game in gamemode_set:
-        #potential_G = [p for Team in Game for p in Team]
-        potential_G = []
-        for Team in Game:
-            for player in Team:
-                potential_G.append(player)
+        potential_G = [p for Team in Game for p in Team]
         ratings_G = ratings[potential_G]
         probas = game_odds(ratings_G, rds_G, T, P)
         #that's helpstone's metric for a fair game
@@ -86,19 +77,17 @@ def find_best_game(ratings, rds, gamemode):
             best_ratings = ratings_G
             most_fair = fairness_G
     return [int(np.ceil((best_G.index(p)+1)/P)) for p in range(T*P)]
-    
-#output: list of team index for each player
 
 # #Example usage
 # ratings_G = np.round(np.random.normal(1500, 300, 12),0)
 # print(ratings_G)
 # rds_G = np.array([90]*12)
-# teams_footies = find_best_game(ratings_G, rds_G, 'Footies')
+# teams_footies = find_best_game(ratings_G, rds_G, '3v3v3v3')
 # print(teams_footies)
 
 
 # ratings_G = np.round(np.random.normal(1500, 300, 8),0)
 # print(ratings_G)
 # rds_G = np.array([90]*8)
-# teams_4s = find_best_game(ratings_G, rds_G, '4on4')
+# teams_4s = find_best_game(ratings_G, rds_G, '4v4')
 # print(teams_4s)
