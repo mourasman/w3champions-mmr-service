@@ -46,7 +46,7 @@ def game_odds(ratings_G, rds_G, T, P):
     return odds
 
 
-#gamemode should be of the form "PvPvP"
+#gamemode should be of the form "PvPvP" or "PonPonP"
 #number of teams is occurences of "v"+1
 
 def find_best_game(ratings, rds, gamemode):
@@ -55,7 +55,7 @@ def find_best_game(ratings, rds, gamemode):
     #the point is that generaate_super_recursive should only be called once per gamemode
     #whenever we restart the service
     #and its output be available in memory at any time later
-    T = gamemode.count('v')+1
+    T = gamemode.count(gamemode[0])
     P = int(gamemode[0])
     if 'superset' not in globals():
         global superset
