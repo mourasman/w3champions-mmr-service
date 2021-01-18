@@ -89,15 +89,15 @@ def posterior_pdf(ratings_G_u, ratings_G_o, rds_G_o, beta, T_won, T, m = None):
     #differs from usual BT as we have:
     #1) different rating deviation for each team
     #2) performance uncertainty with beta
-	#3) multiple players by team
+    #3) multiple players by team
     s_p = np.exp((P*ratings_T_u[T_won])/(C_sd*rd_G))
     s_G =  np.sum(np.exp((P*ratings_T_u)/(C_sd*rd_G)))
     #s_p/s_G = win probability for the winning team
     #this is the evidence for the observed result
     loglikelihood = np.log(s_p/s_G)
     for n in range(N):
-        #small trick for the marginalization step in the integral
+        #trick for the marginalization step in the integral
         if m == None or m == n:
-            #this is the evidence for each player's updated rating based on the prior
+            #this is the evidence for each player's updated rating under the prior
             loglikelihood += np.log(logistic_pdf(ratings_G_u[n], ratings_G_o[n], C_sd*rds_G_o[n]))
     return loglikelihood
