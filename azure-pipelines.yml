@@ -28,4 +28,3 @@ steps:
     dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
     tags: |
       $(Build.BuildId)
-      latest
