@@ -8,7 +8,7 @@ steps:
 - script: |
     python3 -m pip install --upgrade pip setuptools wheel
     python3 -m pip install pipenv
-    python3 -m pipenv install --system
+    python3 -m pipenv install
     python3 -m pipenv run pytest
   displayName: 'Run fastapi tests'
 
