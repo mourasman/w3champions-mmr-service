@@ -6,10 +6,10 @@ pool:
 
 steps:
 - script: |
-    pip install --upgrade pip setuptools wheel
-    pip install pipenv
-    pipenv install
-    pipenv run pytest
+    python3 -m pip install --upgrade pip setuptools wheel
+    python3 -m pip install pipenv
+    python3 -m pipenv install --system
+    python3 -m pytest
   displayName: 'Run fastapi tests'
 
 - task: PublishTestResults@2
