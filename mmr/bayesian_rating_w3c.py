@@ -1,7 +1,7 @@
+import numpy as np
+from pydantic import BaseModel
 from scipy import integrate
 from scipy import optimize
-from pydantic import BaseModel
-import numpy as np
 
 
 class UpdateMmrRequestBody(BaseModel):
@@ -36,7 +36,7 @@ def update_after_game(ratings_list, rds_list, winning_team, number_of_teams):
     N = int(len(ratings_G))
     # maximum a posteriori to compute new ratings
     opt = optimize.minimize(lambda x: -posterior_pdf(x, ratings_G, rds_G, beta, winning_team, number_of_teams),
-                            x0=[ratings_G])
+                            x0=[ratings_G], tol=0.00000000001)
     # updated ratings
     ratings_G_u = opt.x
     rds_G_u = []
@@ -52,7 +52,8 @@ def update_after_game(ratings_list, rds_list, winning_team, number_of_teams):
         # integral of p(x)*(x-mu)**2/C_int over the domain
         rd_G_u_p = np.sqrt(
             integrate.quad(lambda x: (x - ratings_G_u[p]) ** 2 / C_int * np.exp(posterior_pdf(np.concatenate(
-                [ratings_G_u[:p], np.array(x), ratings_G_u[p + 1:]], axis=None), ratings_G, rds_G, beta, winning_team, number_of_teams, p)),
+                [ratings_G_u[:p], np.array(x), ratings_G_u[p + 1:]], axis=None), ratings_G, rds_G, beta, winning_team,
+                number_of_teams, p)),
                            a=0, b=5000)[0])
         # floor rating deviation to prevent rating staleness
         rd_G_u_p = max(rd_min, rd_G_u_p)
