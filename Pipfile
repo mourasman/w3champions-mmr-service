@@ -4,9 +4,11 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pytest = "*"
 
 [packages]
 glicko2 = "*"
 scipy = "*"
 uvicorn = "*"
 fastapi = "*"
+requests = "*"
