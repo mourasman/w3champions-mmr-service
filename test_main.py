@@ -1,3 +1,4 @@
+import numpy as np
 from fastapi.testclient import TestClient
 
 from main import app
@@ -22,8 +23,8 @@ def run_test(mmr0, rd0, winning_team, number_of_teams, mmr1, rd1):
     ratings_list = result["ratings_list"]
     rds_list = result["rds_list"]
 
-    rl = [round(num) for num in ratings_list]
-    rd = [round(num) for num in rds_list]
+    rl = [np.round(num) for num in ratings_list]
+    rd = [np.round(num) for num in rds_list]
 
     assert rl == mmr1
     assert rd == rd1
